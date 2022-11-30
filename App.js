@@ -3,9 +3,11 @@ import { useFonts } from 'expo-font';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Constants from 'expo-constants';
+import { ActivityIndicator } from 'react-native';
 
 const Drawer = createDrawerNavigator();
 const HomeScreen = require("./screens/HomeScreen");
+const AgentsScreen = require("./screens/AgentsScreen");
 const WeaponsScreen = require("./screens/WeaponsScreen");
 
 export default function App() {
@@ -14,7 +16,7 @@ export default function App() {
     'TungstenBold': require('./assets/fonts/Tungsten-Bold.ttf'),
   });
 
-  if (!fontsLoaded) return null;
+  if (!fontsLoaded) return <ActivityIndicator/>;
 
   return (
     <NavigationContainer>
@@ -32,7 +34,7 @@ export default function App() {
         }}
       >
         <Drawer.Screen name='Inicio' component={HomeScreen} options={{headerShown: false}}/>
-        <Drawer.Screen name='Agentes' component={HomeScreen} options={{headerShown: false}}/>
+        <Drawer.Screen name='Agentes' component={AgentsScreen} options={{headerShown: false}}/>
         <Drawer.Screen name='Arsenal' component={WeaponsScreen} options={{headerShown: false}}/>
       </Drawer.Navigator>
     </NavigationContainer>

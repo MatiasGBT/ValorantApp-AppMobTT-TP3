@@ -1,9 +1,7 @@
 import * as React from 'react';
 import { useEffect } from "react";
-import { StyleSheet, Text, View, ActivityIndicator, Image, ScrollView, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, ActivityIndicator, ScrollView, Dimensions } from 'react-native';
 const axios = require('axios').default;
-import { Button } from 'react-native-paper';
-import { LinearGradient } from 'expo-linear-gradient';
 import Constants from 'expo-constants';
 import { Video } from 'expo-av';
 
@@ -11,39 +9,9 @@ const ScreenHeight = Dimensions.get('window').height;
 const ScreenWidth = Dimensions.get('window').width;
 const ratio = ScreenWidth / 1920; //Necesario para fingir un "auto" en el height del vídeo
 
-const Agent = ({ agent }) => {
-    let colors = agent.backgroundGradientColors.map(color => color = '#' + color);
-    return (
-        <LinearGradient style={styles.agentHero} colors={colors}>
-            <Image source={{ uri: agent.background }} style={styles.agentBackgroundImg}></Image>
-            <Image source={{ uri: agent.fullPortrait }} style={styles.agentImg}></Image>
-            <Text key={agent.uuid} style={styles.agentName}>{agent.displayName} </Text>
-            <View style={styles.agentButtons}>
-                <View style={styles.agentButtonContainer}>
-                    <Button mode="contained" style={styles.agentButton}>VER AGENTE</Button>
-                </View>
-                <View style={styles.agentButtonContainer}>
-                    <Button mode="contained" style={styles.agentButton}>VER TODOS</Button>
-                </View>
-            </View>
-        </LinearGradient>
-    )
-}
-
-const Map = ({ map }) => {
-    return (
-        <View style={styles.mapContainer}>
-            <Image source={require('../assets/img/map_bg.png')} style={styles.mapBgImg} />
-            <Image source={{ uri: map.splash }} style={styles.mapImg} />
-            <View style={styles.mapBody}>
-                <Text style={styles.mapName}>{map.displayName}</Text>
-                <Button mode="contained" style={styles.mapButton}>VER MAPA</Button>
-            </View>
-        </View>
-    )
-}
-
+const Agent = require("../components/AgentHero");
 let agentHero = null;
+const Map = require("../components/MapCarrouselItem");
 
 function HomeScreen() {
     function pegarApi() {
@@ -51,6 +19,7 @@ function HomeScreen() {
             .then((response) => {
                 let agents = response.data.data;
                 agentHero = agents[Math.floor(Math.random() * agents.length)];
+                console.log(agentHero.displayName);
             })
             .catch((error) => console.log(error));
 
@@ -65,7 +34,6 @@ function HomeScreen() {
 
     const [maps, setMaps] = React.useState([]);
     const video = React.useRef(null);
-    const [status, setStatus] = React.useState({});
 
     return (
         <ScrollView style={styles.container}>
@@ -88,7 +56,6 @@ function HomeScreen() {
                     shouldPlay
                     isLooping
                     resizeMode="contain"
-                    onPlaybackStatusUpdate={status => setStatus(() => status)}
                 />
             </View>
 
@@ -118,44 +85,6 @@ const styles = StyleSheet.create({
     generalWhiteText: {
         fontFamily: 'TungstenBold',
         color: '#ece8e1',
-    },
-
-    agentHero: {
-        width: '100%',
-        height: ScreenHeight - Constants.statusBarHeight,
-    },
-    agentBackgroundImg: {
-        width: '100%',
-        height: '80%',
-        position: 'absolute',
-    },
-    agentImg: {
-        width: '100%',
-        height: '80%',
-    },
-    agentName: {
-        fontSize: 48,
-        fontFamily: 'ValorantFont',
-        textAlign: 'center',
-        color: '#fff',
-    },
-    agentButtons: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        padding: 10,
-    },
-    agentButtonContainer: {
-        backgroundColor: 'transparent',
-        width: '45%',
-        padding: 5,
-        borderRadius: 0,
-        borderWidth: 1,
-        borderColor: 'hsla(38,22%,90%,.5)',
-    },
-    agentButton: {
-        backgroundColor: '#FD4556',
-        borderRadius: 0,
     },
 
     videoContainer: {
@@ -196,39 +125,6 @@ const styles = StyleSheet.create({
     mapsText: {
         fontSize: 20,
         textAlign: 'left',
-    },
-    mapContainer: {
-        width: ScreenWidth - 20,
-    },
-    mapBgImg: {
-        position: 'absolute',
-        height: 300,
-        width: '100%',
-        zIndex: 444
-    },
-    mapImg: {
-        height: 300,
-    },
-    mapBody: {
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-    },
-    mapName: {
-        color: 'white',
-        fontFamily: 'TungstenBold',
-        fontSize: 32,
-        textAlign: 'left',
-        marginTop: 5,
-        textTransform: 'uppercase',
-    },
-    mapButton: {
-        backgroundColor: '#383e3a', //#ece8e1
-        textColor: '#ece8e1', //#383e3a
-        borderRadius: 0,
-        width: '50%',
-        marginBottom: 5,
     },
 });
 
