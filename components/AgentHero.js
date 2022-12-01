@@ -2,10 +2,12 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Button } from 'react-native-paper';
 import { StyleSheet, Text, View, Image, Dimensions } from 'react-native';
 import Constants from 'expo-constants';
+import { useNavigation } from '@react-navigation/native';
 
 const ScreenHeight = Dimensions.get('window').height;
 
 function AgentHero(props) {
+    const navigation = useNavigation();
     let agent = props.agent;
     let colors = agent.backgroundGradientColors.map(color => color = '#' + color);
     return (
@@ -15,10 +17,10 @@ function AgentHero(props) {
             <Text key={agent.uuid} style={styles.agentName}>{agent.displayName} </Text>
             <View style={styles.agentButtons}>
                 <View style={styles.agentButtonContainer}>
-                    <Button mode="contained" style={styles.agentButton}>VER AGENTE</Button>
+                    <Button mode="contained" style={styles.agentButton} onPress={()=>navigation.navigate("Agente", {agentUuid: agent.uuid})}>VER AGENTE</Button>
                 </View>
                 <View style={styles.agentButtonContainer}>
-                    <Button mode="contained" style={styles.agentButton}>VER TODOS</Button>
+                    <Button mode="contained" style={styles.agentButton} onPress={()=>navigation.navigate("Agentes")}>VER TODOS</Button>
                 </View>
             </View>
         </LinearGradient>

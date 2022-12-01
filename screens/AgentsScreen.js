@@ -5,20 +5,25 @@ const axios = require('axios').default;
 import Constants from 'expo-constants';
 import { Button, TextInput } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useNavigation } from '@react-navigation/native';
 
 const ScreenHeight = Dimensions.get('window').height;
 const ScreenWidth = Dimensions.get('window').width;
 const ratio = ScreenWidth / 1920; //Necesario para fingir un "auto" en el height del vídeo
 
 const Agent = ({ agent }) => {
-    let colors = agent.backgroundGradientColors.map(color => color = '#' + color);
+    const navigation = useNavigation();
+    let colors = [
+        '#' + agent.backgroundGradientColors[0],
+        '#' + agent.backgroundGradientColors[0],
+    ]
     return (
         <LinearGradient style={styles.agentContainer} colors={colors}>
             <Image source={{ uri: agent.background }} style={styles.agentBackgroundImg}></Image>
             <Image source={{ uri: agent.fullPortrait }} style={styles.agentImg}></Image>
             <View style={styles.agentInfo}>
                 <Text style={styles.agentName}>{agent.displayName}</Text>
-                <Button mode="contained" style={styles.agentButton}>
+                <Button mode="contained" style={styles.agentButton} onPress={()=>navigation.navigate("Agente", {agentUuid: agent.uuid})}>
                     <Text style={styles.agentButtonText}>VER DETALLES</Text>
                 </Button>
             </View>

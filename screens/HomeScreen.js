@@ -13,6 +13,8 @@ const Agent = require("../components/AgentHero");
 let agentHero = null;
 const Map = require("../components/MapCarrouselItem");
 
+const AgentsScreen = require("./AgentsScreen");
+
 function HomeScreen() {
     function pegarApi() {
         axios.get('https://valorant-api.com/v1/agents?isPlayableCharacter=true&language=es-MX')
