@@ -4,13 +4,12 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { useFonts } from 'expo-font';
 import Constants from 'expo-constants';
 import { ActivityIndicator } from 'react-native';
-import { View } from 'react-native';
 
 const Drawer = createDrawerNavigator();
-const HomeScreen = require("./screens/HomeScreen");
-const AgentsScreen = require("./screens/AgentsScreen");
-const WeaponsScreen = require("./screens/WeaponsScreen");
-const AgentScreen = require("./screens/AgentScreen");
+const HomeScreen = require("./modules/Home/screens/HomeScreen");
+const AgentsScreen = require("./modules/Agents/screens/AgentsScreen");
+const WeaponsScreen = require("./modules/Weapons/screens/WeaponsScreen");
+const AgentScreen = require("./modules/Agents/screens/AgentScreen");
 
 export default function App() {
   const [fontsLoaded] = useFonts({
