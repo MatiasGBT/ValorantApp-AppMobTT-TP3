@@ -2,6 +2,10 @@ import * as React from 'react';
 import { StyleSheet, Text, View, Dimensions } from 'react-native';
 
 const ScreenWidth = Dimensions.get('window').width;
+const WeaponStats = require('./WeaponStats');
+const WeaponShopStats = require('./WeaponShopStats');
+const WeaponShopData = require('./WeaponShopData');
+const WeaponDamage = require('./WeaponDamage');
 
 function WeaponHeader(props) {
     let weapon = props.weapon;
@@ -9,77 +13,22 @@ function WeaponHeader(props) {
         <View style={styles.weaponHeader}>
             <Text style={[styles.generalText, styles.weaponName]}>{weapon.displayName}</Text>
             {weapon.weaponStats
-                ? <View>
-                    <Text style={[styles.generalText, styles.statsTitle]}>Estadísticas:</Text>
-                    <View style={styles.weaponStats}>
-                        <View style={styles.weaponStat}>
-                            <Text style={[styles.generalText, styles.weaponStatText]}>Cadencia de fuego:</Text>
-                            <Text style={[styles.generalText, styles.weaponStatText]}>{weapon.weaponStats.fireRate} balas por segundo</Text>
-                        </View>
-                        <View style={styles.weaponStat}>
-                            <Text style={[styles.generalText, styles.weaponStatText]}>Tamaño del cargador:</Text>
-                            <Text style={[styles.generalText, styles.weaponStatText]}>{weapon.weaponStats.magazineSize}</Text>
-                        </View>
-                        <View style={styles.weaponStat}>
-                            <Text style={[styles.generalText, styles.weaponStatText]}>Velocidad al correr:</Text>
-                            <Text style={[styles.generalText, styles.weaponStatText]}>{weapon.weaponStats.runSpeedMultiplier * 100}%</Text>
-                        </View>
-                        <View style={styles.weaponStat}>
-                            <Text style={[styles.generalText, styles.weaponStatText]}>Tiempo para equipar:</Text>
-                            <Text style={[styles.generalText, styles.weaponStatText]}>{weapon.weaponStats.equipTimeSeconds} (segundos)</Text>
-                        </View>
-                        <View style={styles.weaponStat}>
-                            <Text style={[styles.generalText, styles.weaponStatText]}>Tiempo para recargar:</Text>
-                            <Text style={[styles.generalText, styles.weaponStatText]}>{weapon.weaponStats.reloadTimeSeconds} (segundos)</Text>
-                        </View>
-                        <View style={styles.weaponStat}>
-                            <Text style={[styles.generalText, styles.weaponStatText]}>Precisión de la 1ra bala:</Text>
-                            <Text style={[styles.generalText, styles.weaponStatText]}>{weapon.weaponStats.firstBulletAccuracy * 100}%</Text>
-                        </View>
-                    </View>
-                  </View>
+                ? <WeaponStats weapon={weapon}/>
                 : null
             }
 
             {weapon.weaponStats && weapon.weaponStats.adsStats
-                ? <View>
-                    <Text style={[styles.generalText, styles.statsTitle]}>Estadísticas al apuntar:</Text>
-                    <View style={styles.weaponStats}>
-                        <View style={styles.weaponStat}>
-                            <Text style={[styles.generalText, styles.weaponStatText]}>Cadencia de fuego:</Text>
-                            <Text style={[styles.generalText, styles.weaponStatText]}>{weapon.weaponStats.adsStats.fireRate} balas por segundo</Text>
-                        </View>
-                        <View style={styles.weaponStat}>
-                            <Text style={[styles.generalText, styles.weaponStatText]}>Velocidad al correr:</Text>
-                            <Text style={[styles.generalText, styles.weaponStatText]}>{weapon.weaponStats.adsStats.runSpeedMultiplier * 100}%</Text>
-                        </View>
-                        <View style={styles.weaponStat}>
-                            <Text style={[styles.generalText, styles.weaponStatText]}>Precisión de la 1ra bala:</Text>
-                            <Text style={[styles.generalText, styles.weaponStatText]}>{weapon.weaponStats.adsStats.firstBulletAccuracy * 100}%</Text>
-                        </View>
-                    </View>
-                  </View>
+                ? <WeaponShopStats weapon={weapon}/>
                 : null
             }
 
             {weapon.shopData
-                ? <View>
-                    <Text style={[styles.generalText, styles.statsTitle]}>Datos de la tienda:</Text>
-                    <View style={styles.weaponStats}>
-                        <View style={styles.weaponStat}>
-                            <Text style={[styles.generalText, styles.weaponStatText]}>Costo:</Text>
-                            <Text style={[styles.generalText, styles.weaponStatText]}>{weapon.shopData.cost}</Text>
-                        </View>
-                        <View style={styles.weaponStat}>
-                            <Text style={[styles.generalText, styles.weaponStatText]}>Categoría:</Text>
-                            <Text style={[styles.generalText, styles.weaponStatText]}>{weapon.shopData.category}</Text>
-                        </View>
-                        <View style={styles.weaponStat}>
-                            <Text style={[styles.generalText, styles.weaponStatText]}>Se puede reembolsar:</Text>
-                            <Text style={[styles.generalText, styles.weaponStatText]}>{weapon.shopData.canBeTrashed ? 'Sí' : 'No'}</Text>
-                        </View>
-                    </View>
-                  </View>
+                ? <WeaponShopData weapon={weapon}/>
+                : null
+            }
+
+            {weapon.weaponStats && weapon.weaponStats.damageRanges.length > 0
+                ? weapon.weaponStats.damageRanges.map((damageRange, index) => <WeaponDamage damageRange={damageRange} key={index}/>)
                 : null
             }
         </View>
@@ -105,7 +54,6 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         flexWrap: "wrap",
-        justifyContent: 'space-between',
     },
     weaponStat: {
         width: ScreenWidth / 3 - 10, //10 = weaponHeader padding,

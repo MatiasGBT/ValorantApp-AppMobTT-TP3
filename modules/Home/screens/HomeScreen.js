@@ -5,15 +5,12 @@ const axios = require('axios').default;
 import Constants from 'expo-constants';
 import { Video } from 'expo-av';
 
-const ScreenHeight = Dimensions.get('window').height;
 const ScreenWidth = Dimensions.get('window').width;
 const ratio = ScreenWidth / 1920; //Necesario para fingir un "auto" en el height del vídeo
 
 const Agent = require("../components/AgentHero");
 let agentHero = null;
 const Map = require("../components/MapCarrouselItem");
-
-const AgentsScreen = require("../../Agents/screens/AgentsScreen");
 
 function HomeScreen() {
     function pegarApi() {

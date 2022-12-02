@@ -1,9 +1,11 @@
 import { Button } from 'react-native-paper';
 import { StyleSheet, Text, View, Image, Dimensions } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const ScreenWidth = Dimensions.get('window').width;
 
 function MapCarrouselItem(props) {
+    const navigation = useNavigation();
     let map = props.map;
     return (
         <View style={styles.mapContainer}>
@@ -11,7 +13,7 @@ function MapCarrouselItem(props) {
             <Image source={{ uri: map.splash }} style={styles.mapImg} />
             <View style={styles.mapBody}>
                 <Text style={styles.mapName}>{map.displayName}</Text>
-                <Button mode="contained" style={styles.mapButton}>VER MAPA</Button>
+                <Button mode="contained" style={styles.mapButton} onPress={()=>navigation.navigate("Mapa", {mapUuid: map.uuid})}>VER MAPA</Button>
             </View>
         </View>
     )

@@ -25,7 +25,7 @@ function AgentsScreen() {
     const [agentsFiltered, setAgentsFiltered] = React.useState([]);
     const [agentName, setAgentName] = React.useState("");
 
-    function filterAgentsByName(agentName) {
+    function filterByName(agentName) {
         setAgentName(agentName);
         if (agentName != '') {
             setAgentsFiltered(agents.filter(a => a.displayName.toLowerCase().includes(agentName.toLowerCase())));
@@ -43,7 +43,7 @@ function AgentsScreen() {
                 mode='outlined'
                 outlineColor='#FD4556'
                 activeOutlineColor='#FD4556'
-                onChangeText={text => filterAgentsByName(text)}
+                onChangeText={text => filterByName(text)}
             />
             <View style={styles.agentsListContainer}>
                 {agentsFiltered.length > 0
@@ -58,6 +58,7 @@ const styles = StyleSheet.create({
     container: {
         width: '100%',
         marginTop: Constants.statusBarHeight,
+        backgroundColor: '#FFFBF5',
     },
     generalBlackText: {
         fontFamily: 'TungstenBold',
