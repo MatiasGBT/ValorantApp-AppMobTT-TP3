@@ -46,7 +46,7 @@ function AgentScreen({ route }) {
                             {agent.abilities.map((skill) => <Skill skill={skill} key={skill.slot} />)}
                         </View>
                     </LinearGradient>
-                </View>
+                  </View>
                 : <ActivityIndicator />}
         </ScrollView>
     )

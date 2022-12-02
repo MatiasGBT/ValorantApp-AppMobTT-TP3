@@ -10,6 +10,7 @@ const HomeScreen = require("./modules/Home/screens/HomeScreen");
 const AgentsScreen = require("./modules/Agents/screens/AgentsScreen");
 const WeaponsScreen = require("./modules/Weapons/screens/WeaponsScreen");
 const AgentScreen = require("./modules/Agents/screens/AgentScreen");
+const WeaponScreen = require("./modules/Weapons/screens/WeaponScreen");
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -41,6 +42,7 @@ export default function App() {
         <Drawer.Screen name='Agentes' component={AgentsScreen}/>
         <Drawer.Screen name='Arsenal' component={WeaponsScreen}/>
         <Drawer.Screen name='Agente' component={AgentScreen} options={{drawerItemStyle: { height: 0 }}}/>
+        <Drawer.Screen name='Arma' component={WeaponScreen} options={{drawerItemStyle: { height: 0 }}}/>
       </Drawer.Navigator>
     </NavigationContainer>
   );

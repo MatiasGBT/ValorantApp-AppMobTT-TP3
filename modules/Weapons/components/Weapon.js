@@ -1,15 +1,17 @@
 import * as React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import { Button } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
 
 function Weapon(props) {
     let weapon = props.weapon;
+    const navigation = useNavigation();
     return (
         <View style={styles.weaponContainer}>
             <Image source={{ uri: weapon.displayIcon }} style={styles.weaponImg} />
             <Text style={styles.weaponName}>{weapon.displayName}.</Text>
             <View style={styles.weaponButtonContainer}>
-                <Button mode="contained" style={styles.weaponButton}>VER DETALLES</Button>
+                <Button mode="contained" style={styles.weaponButton} onPress={()=>navigation.navigate("Arma", {weaponUuid: weapon.uuid})}>VER DETALLES</Button>
             </View>
         </View>
     )
